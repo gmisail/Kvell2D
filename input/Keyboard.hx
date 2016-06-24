@@ -1,11 +1,14 @@
 package kvell2D.input;
 
-import kha.input.Keyboard;
 import kha.Key;
 
 class Keyboard {
 	
 	public function new(){
+		
+	}
+	
+	public function get(){
 		kha.input.Keyboard.get().notify(_keyDown, _keyUp);
 	}
 

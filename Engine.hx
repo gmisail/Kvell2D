@@ -10,7 +10,6 @@ import kha.Image;
 import kha.Font;
 import kha.graphics2.Graphics;
 
-import kvell2D.input.Input;
 import kvell2D.Time;
 
 class Engine{
@@ -27,7 +26,6 @@ class Engine{
 	private var _update:Void->Void;
 
 	/* components */
-	private var _input:Input;
 	private var _time:Time;
 	
 	public var buffer:Image;
@@ -44,12 +42,14 @@ class Engine{
 				_update = game.update;
 			
 				buffer = Image.createRenderTarget(width, height);
-				
-				_input = new Input();
+			
+				Kvell2D.init();	
 				_time = new Time();
+			
 				
 				begin();
-
+			
+				
 				System.notifyOnRender(render);
 				Scheduler.addTimeTask(update, 0, 1 / fps);
 			});
