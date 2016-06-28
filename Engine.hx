@@ -24,9 +24,6 @@ class Engine{
 	private var _begin:Void->Void;
 	private var _render:Void->Void;
 	private var _update:Void->Void;
-
-	/* components */
-	private var _time:Time;
 	
 	public var buffer:Image;
 	
@@ -43,9 +40,7 @@ class Engine{
 			
 				buffer = Image.createRenderTarget(width, height);
 			
-				Kvell2D.init();	
-				_time = new Time();
-			
+				Kvell2D.init();				
 				
 				begin();
 			
@@ -62,7 +57,15 @@ class Engine{
 		this.width = width;
 		this.height = height;
 	}
+
+	public function getWidth():Int{
+		return System.windowWidth();
+	}
 	
+	public function getHeight():Int{
+		return System.windowHeight();
+	}
+
 	public function setTitle(newTitle:String){
 		this.title = newTitle;	
 	}
@@ -75,7 +78,7 @@ class Engine{
 	}
 
 	function update(): Void {
-		_time.update();
+		Kvell2D.time.update();
 		_update();
 	}
 

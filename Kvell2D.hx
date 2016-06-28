@@ -6,14 +6,17 @@ import kvell2D.input.Keyboard;
 class Kvell2D{
 	
 	public static var engine = new Engine();
-	public static var graphics = new Graphics();
 	public static var keyboard = new Keyboard();
 	public static var mouse = new Mouse();
+	public static var physics = new Physics();
+	public static var time = new Time();
+	public static var log = new Log();
 	
 	public function new(){ }
 	
 	public static function init(){
 		keyboard.get();
+		mouse.get();
 	}
 	
 }

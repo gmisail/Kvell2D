@@ -10,6 +10,7 @@ class Text extends Object{
 	public var color:Color;
 	public var text:String;
 	public var font:Font;
+	public var size:Int = 64;
 	
 	public function new(x:Int, y:Int, text:String, font:Font){
 		super();
@@ -24,9 +25,9 @@ class Text extends Object{
 		
 		var g = i.g2;
 		g.font = font;
-		g.fontSize = 64;
+		g.fontSize = size;
 		g.color = color;
-		g.drawString(text, 128, 512);
+		g.drawString(text, x, y);
 	}
 	
 }

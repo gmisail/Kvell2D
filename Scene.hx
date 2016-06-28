@@ -22,14 +22,18 @@ class Scene{
 	
 	public function update(){
 		for(object in objects){
-			object.update();
+			if(object.active) object.update();
 		}
 	}
 	
 	public function render(){
 		for(object in objects){
-			object.render(Kvell2D.engine.buffer);
+			if(object.visible) object.render(Kvell2D.engine.buffer);
 		}
+	}
+
+	public function dispose(){
+		
 	}
 	
 }
