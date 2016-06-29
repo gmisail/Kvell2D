@@ -11,8 +11,11 @@ class Kvell2D{
 	public static var physics = new Physics();
 	public static var time = new Time();
 	public static var log = new Log();
+	public static var audio = new Audio();
 	
-	public function new(){ }
+	public function new(){
+		
+	}
 	
 	public static function init(){
 		keyboard.get();
