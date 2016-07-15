@@ -7,11 +7,12 @@ class Log{
 	}
 
 	public function send(text:String){
-		trace(text);
+		trace(text + "\n");
 	}
 
-	public function trackDraw(s:Scene){
-		send("Draw: " + s.objects.length);
+	public function statistics(s:Scene){
+		send("Added: " + s.objects.length);
+	//	send("Drawn: " + s.drawn.length);
 	}
 
 }

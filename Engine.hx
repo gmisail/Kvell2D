@@ -5,9 +5,11 @@ import kha.Framebuffer;
 import kha.System;
 import kha.Scaler;
 import kha.Assets;
+import kha.Color;
 
 import kha.Image;
 import kha.Font;
+import kha.math.FastMatrix3;
 import kha.graphics2.Graphics;
 
 import kvell2D.Time;
@@ -15,10 +17,13 @@ import kvell2D.Time;
 class Engine{
 
 	public var fps:Int = 60;
-	public var width:Int = 800;
-	public var height:Int = 600;
-	public var title:String = "Kvell2D Basic";
-	
+	public var width:Int = 0;
+	public var height:Int = 0;
+	public var drawWidth:Int;
+	public var drawHeight:Int;
+	public var title:String = "Kvell2D";
+	public var color:Color = Color.fromValue(0x009900);
+
 	private var _currentScene:Scene;
 	
 	private var _begin:Void->Void;
@@ -26,25 +31,33 @@ class Engine{
 	private var _update:Void->Void;
 	
 	public var buffer:Image;
+	public var camera:Camera;
+
+	//flags
+	public var visible:Bool = true;
+	public var alive:Bool = true;
 	
 	public function new(){}
 
 	public function start(game:Game){
-		System.init({title: this.title, width: this.width, height: this.height}, function() {
-			Assets.loadEverything(function(){
-				
+		if(width == 0 && height == 0){
+			setSize(800, 600);
+		}
+		
+		System.init({title: "Yo", width: this.width, height: this.height}, function() {
 			
+			camera = new Camera();
+			
+			Assets.loadEverything(function(){
 				_begin = game.begin;
 				_render = game.render;
 				_update = game.update;
 			
 				buffer = Image.createRenderTarget(width, height);
 			
-				Kvell2D.init();				
+				Manager.init();				
 				
 				begin();
-			
-				
 				System.notifyOnRender(render);
 				Scheduler.addTimeTask(update, 0, 1 / fps);
 			});
@@ -52,10 +65,26 @@ class Engine{
 	}
 	
 	/* kvell2d options */
+
 	
-	public function setScreenSize(width:Int, height:Int){
+	public function setSize(width:Int, height:Int, ?drawWidth:Int = null, ?drawHeight:Int = null){
 		this.width = width;
 		this.height = height;
+		if(drawWidth == null){
+			this.drawWidth = this.width;
+		}else{
+			this.drawWidth = drawWidth;
+		}
+		
+		if(drawHeight == null){
+			this.drawHeight = this.height;
+		}else{
+			this.drawHeight = drawHeight;
+		}
+	}
+
+	public function setColor(color:Int){
+		this.color = Color.fromValue(color);
 	}
 
 	public function getWidth():Int{
@@ -77,26 +106,37 @@ class Engine{
 
 	}
 
+
 	function update(): Void {
-		Kvell2D.time.update();
-		_update();
+		Manager.time.update();
+
+		
+		if(alive){
+			//camera.update();
+			_update();
+		}
 	}
 
 	function render(framebuffer: Framebuffer): Void {
-		var _graphics = buffer.g2;
+		if(visible){
+			var _graphics = buffer.g2;
 
-		_graphics.begin();		
-		_render();
-		_graphics.end();
+			_graphics.begin(color);
+			_graphics.pushTransformation(FastMatrix3.translation(-camera.viewport.x, -camera.viewport.y));		
+			_render();
+			_graphics.popTransformation();
+			_graphics.end();
 		
-		framebuffer.g2.begin();
-		Scaler.scale(buffer, framebuffer, System.screenRotation);
-		framebuffer.g2.end();
+			framebuffer.g2.begin();
+			Scaler.scale(buffer, framebuffer, System.screenRotation);
+			framebuffer.g2.end();
+		}
 	}
 	
 	/* scene manager */
 	
 	public function setScene(scene:Scene){
+		camera.reset();
 		_currentScene = scene;
 		_currentScene.begin();
 	}

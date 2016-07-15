@@ -15,20 +15,29 @@ class Scene{
 	public function remove(o:Object){
 		objects.remove(o);
 	}
+
+	public function addLayer(l:Layer){
+		for(o in l.contents){
+			add(o);
+		}
+	}
 	
 	public function begin(){
 		
 	}
 	
-	public function update(){
+	public function update(){				
 		for(object in objects){
-			if(object.active) object.update();
+			if(object.active){
+				object.update();
+			}
 		}
+
 	}
 	
 	public function render(){
 		for(object in objects){
-			if(object.visible) object.render(Kvell2D.engine.buffer);
+			if(object.visible) object.render(Manager.engine.buffer);
 		}
 	}
 

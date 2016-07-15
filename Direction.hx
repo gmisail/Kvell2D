@@ -6,6 +6,6 @@ enum Direction{
 	DOWN;
 	RIGHT;
 	LEFT;
-	ALL;
+	//ALL;
 	
 }

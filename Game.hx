@@ -11,11 +11,11 @@ class Game{
 	}
 	
 	public function render(){
-		Kvell2D.engine.getScene().render();
+		Manager.engine.getScene().render();
 	}
 	
 	public function update(){
-		Kvell2D.engine.getScene().update();
+		Manager.engine.getScene().update();
 	}
 	
 }

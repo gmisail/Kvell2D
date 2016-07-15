@@ -3,7 +3,7 @@ package kvell2D;
 import kvell2D.input.Mouse;
 import kvell2D.input.Keyboard;
 
-class Kvell2D{
+class Manager{
 	
 	public static var engine = new Engine();
 	public static var keyboard = new Keyboard();
@@ -12,6 +12,8 @@ class Kvell2D{
 	public static var time = new Time();
 	public static var log = new Log();
 	public static var audio = new Audio();
+	public static var random = new Random();
+	public static var file = new File();
 	
 	public function new(){
 		

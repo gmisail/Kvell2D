@@ -7,18 +7,14 @@ class Physics{
 	}
 	
 	public function overlap(a:Object, b:Object):Bool{
-		if (a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.height + a.y > b.y) {
+		if (a.transform.x < b.transform.x + b.transform.width && a.transform.x + a.transform.width > b.transform.x && a.transform.y < b.transform.y + b.transform.height && a.transform.height + a.transform.y > b.transform.y) {
    			return true;
 		}
 		return false;
 	}
 	
+
 	public function collide(a:Object, b:Object):Bool{
-		if (a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.height + a.y > b.y) {
-   			//collision event
-			   
-			return true;
-		}
 		return false;
 	}
 	

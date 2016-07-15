@@ -4,33 +4,36 @@ import kha.graphics2.Graphics;
 import kha.Image;
 
 class Object{
-	
-	public var x:Float;
-	public var y:Float;
-	
-	public var width:Int;
-	public var height:Int;
-	
+
+	public var transform:Transform;
+
 	public var active:Bool = true;
 	public var visible:Bool = true;
 	
 	public function new(){
-		
+		transform = new Transform();
 	}
 
 	public function center(x:Bool, y:Bool){
 		if(x){
-			this.x = Std.int((Kvell2D.engine.width / 2) - (this.width / 2));
+			this.transform.x = Std.int((Manager.engine.width / 2) - (this.transform.width / 2));
 		}
 		
 		if(y){
-			this.y = Std.int((Kvell2D.engine.height / 2) - (this.height / 2));
+			this.transform.y = Std.int((Manager.engine.height / 2) - (this.transform.height / 2));
 		}
 	}
+	
+	public function onScreen():Bool{
+		//if(Std.int(this.x - this.width) < Manager.engine.camera.viewport.x || this.x > Manager.engine.camera.viewport.width || Std.int(this.y + this.height) < Manager.engine.camera.viewport.y || this.y > Manager.engine.camera.viewport.height){
+		//	return false;
+		//}
 
+		return true;
+	}
 	
 	public function update(){
-		
+
 	}
 	
 	public function render(i:Image){
