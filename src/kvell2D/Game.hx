@@ -11,11 +11,11 @@ class Game{
 	}
 	
 	public function render(){
-		Manager.engine.getScene().render();
+		Manager.engine.scene.render();
 	}
 	
 	public function update(){
-		Manager.engine.getScene().update();
+		Manager.engine.scene.update();
 	}
 	
 }

@@ -19,15 +19,21 @@ class Manager{
 	public static var audio = new Audio();
 	public static var random = new Random();
 	public static var screen = new Screen();
-	public static var file = new File();
+	public static var assets = new File();
 	
 	public function new(){
 		
 	}
 	
-	public static function init(){
+	public static function init(w:Int, h:Int){
+		screen.setSize(w, h);
+	}
+	
+	public static function initInput(){
 		keyboard.get();
 		mouse.get();
+		
+		
 	}
 	
 }

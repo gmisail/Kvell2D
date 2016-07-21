@@ -16,15 +16,10 @@ import kvell2D.Time;
 
 class Engine{
 
-	private var fps:Int = 60;
-	private var width:Int = 0;
-	private var height:Int = 0;
-	private var drawWidth:Int;
-	private var drawHeight:Int;
-	private var title:String = "Kvell2D";
-	private var color:Color = Color.fromValue(0x009900);
-
-	private var _currentScene:Scene;
+	public var fps:Int = 60;
+	
+	@:isVar
+	public var scene(get, set):Scene;
 	
 	private var _begin:Void->Void;
 	private var _render:Void->Void;
@@ -41,17 +36,12 @@ class Engine{
 
 	public function start(game:Game){
 		
-		width = Manager.screen.width;
-		height = Manager.screen.height;
-		drawWidth = Manager.screen.drawWidth;
-		drawHeight = Manager.screen.drawHeight;
-
-		if(width == 0 && height == 0){
-			Manager.screen.setSize(800, 600);
+		if(Manager.screen.title == null){
+			Manager.screen.title = "Basic";
 		}
-
-		System.init({title: "Kvell", width: this.width, height: this.height}, function() {
-			Manager.init();
+		
+		System.init({title: Manager.screen.title, width: Manager.screen.width, height: Manager.screen.height}, function() {
+			Manager.initInput();
 
 			camera = new Camera();
 			
@@ -60,7 +50,7 @@ class Engine{
 				_render = game.render;
 				_update = game.update;
 			
-				buffer = Image.createRenderTarget(width, height);		
+				buffer = Image.createRenderTarget(Manager.screen.width, Manager.screen.height);		
 				
 				begin();
 				System.notifyOnRender(render);
@@ -92,10 +82,10 @@ class Engine{
 		if(visible){
 			var _graphics = buffer.g2;
 
-			_graphics.begin(color);
-			_graphics.pushTransformation(FastMatrix3.translation(-camera.viewport.x, -camera.viewport.y));		
+			_graphics.begin(Manager.screen.color);
+			//_graphics.pushTransformation(FastMatrix3.translation(-camera.viewport.x, -camera.viewport.y));		
 			_render();
-			_graphics.popTransformation();
+			//_graphics.popTransformation();
 			_graphics.end();
 		
 			framebuffer.g2.begin();
@@ -106,17 +96,19 @@ class Engine{
 	
 	/* scene manager */
 	
-	public function setScene(scene:Scene){
+	public function set_scene(scene){
 		camera.reset();
-		_currentScene = scene;
-		_currentScene.begin();
+		this.scene = scene;
+		this.scene.begin();
+		
+		return scene;
 	}
 	
-	public function getScene():Scene{
-		if(_currentScene == null){
+	public function get_scene(){
+		if(scene == null){
 			return new Scene();
 		}else{
-			return _currentScene;	
+			return scene;	
 		}
 	}
 	
