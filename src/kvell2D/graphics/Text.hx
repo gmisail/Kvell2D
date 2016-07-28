@@ -10,7 +10,9 @@ class Text extends Object{
 	public var color:Color;
 	public var text:String;
 	public var font:Font;
-	public var size:Int = 64;
+	
+	@:isVar
+	public var size(get, set):Int;
 	
 	public function new(x:Float, y:Float, text:String, font:Font){
 		super();
@@ -20,18 +22,19 @@ class Text extends Object{
 		this.color = Color.White;
 		this.text = text;
 		this.font = font;
+		this.size = 16;
+		
+		this.transform.width = Std.int(this.font.width(size, text));
+		this.transform.height = Std.int(this.font.height(size));
 	}
 
 	public override function center(x:Bool, y:Bool){
-		var tw = this.font.width(size, text);
-		var th = this.font.height(size);
-
 		if(x){
-			this.transform.x = Std.int((Manager.screen.width / 2) - (tw / 2));
+			this.transform.x = Std.int((Manager.screen.width / 2) - (this.transform.width / 2));
 		}
 		
 		if(y){
-			this.transform.y = Std.int((Manager.screen.height / 2) - (th / 2));
+			this.transform.y = Std.int((Manager.screen.height / 2) - (this.transform.height / 2));
 		}
 	}
 	
@@ -44,5 +47,19 @@ class Text extends Object{
 		g.color = color;
 		g.drawString(text, this.transform.x, this.transform.y);
 	}
+	
+	
+	public function get_size():Int{
+		return size;
+	}
+	
+	public function set_size(size):Int{
+		this.size = size;
+		this.transform.width = Std.int(this.font.width(size, text));
+		this.transform.height = Std.int(this.font.height(size));
+		
+		return size;
+	}
+	
 	
 }

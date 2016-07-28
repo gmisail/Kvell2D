@@ -21,8 +21,8 @@ class Tilemap extends Object{
 		this.tilesetImage = tilesetImage;
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
-		this.width = this.columns * tileWidth;
-		this.height = this.rows * tileHeight;
+		this.transform.width = this.columns * tileWidth;
+		this.transform.height = this.rows * tileHeight;
 		this.tileset = new Tileset(tilesetImage, tileWidth, tileHeight);
 	}
 
@@ -95,6 +95,10 @@ class Tilemap extends Object{
 		
 	public function setTile(x:Int, y:Int, tile:Int){
 		data[y][x] = tile;
+	}
+	
+	public function getTile(x:Int, y:Int):Int{
+		return data[y][x];
 	}
 
 }
